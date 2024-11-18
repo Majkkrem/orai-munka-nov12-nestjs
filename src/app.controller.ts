@@ -121,4 +121,35 @@ export class AppController {
     return ujSuti;
   }
 
+  // Házi feladat
+
+  @Get('abcsorrend')
+  //sort helyett Array.from() vagy toSorted()
+  abcSorrend() {
+  const sutikABC = Array.from(this.sutik).sort((a, b) => a.name.localeCompare(b.name));
+  return sutikABC;
+  }
+
+
+  @Get('keszleten')
+  //Ahol a dbszám nagyobb mint 0
+  keszleten() {
+    return this.sutik.filter(suti => suti.db > 0);
+  }
+
+  @Post('ujSutiGyors')
+  //csak a nevet kell megadni a db 1 a laktózmentes false
+  ujSutiGyors(@Body('name') name: string) {
+    const ujSutemeny: Sutemeny = {
+      id: this.nextID,
+      name: name,
+      laktozMentes: false,
+      db: 1,
+    }
+    this.nextID++;
+    this.sutik.push(ujSutemeny);
+    return ujSutemeny;
+  }
+
+
 }
