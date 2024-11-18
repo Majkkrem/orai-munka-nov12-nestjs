@@ -140,6 +140,10 @@ export class AppController {
   @Post('ujSutiGyors')
   //csak a nevet kell megadni a db 1 a laktózmentes false
   ujSutiGyors(@Body('name') name: string) {
+    if (typeof name !== 'string' || name.trim() === "") {
+      throw new BadRequestException('A név megadása kötelező');
+
+    }
     const ujSutemeny: Sutemeny = {
       id: this.nextID,
       name: name,
